@@ -6,7 +6,10 @@
   "main": "server.js",
   "scripts": {
     "dev": "node --watch server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "migrate": "node scripts/migrate.js migrate",
+    "seed": "node scripts/migrate.js seed",
+    "migrate:rollback": "node scripts/migrate.js rollback"
   },
   "dependencies": {
     "cors": "^2.8.5",
