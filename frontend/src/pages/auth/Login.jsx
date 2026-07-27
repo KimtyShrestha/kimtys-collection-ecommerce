@@ -103,7 +103,9 @@ function Login() {
                 label="Remember me"
                 {...register('remember')}
               />
-              <span className="text-sm text-gray-400">Forgot password?</span>
+              <Link to="/forgot-password" className="text-sm text-primary hover:underline">
+                Forgot password?
+              </Link>
             </div>
 
             <Button type="submit" size="lg" loading={isSubmitting} className="w-full">

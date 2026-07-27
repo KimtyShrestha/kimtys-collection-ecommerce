@@ -21,6 +21,10 @@ import AccountLayout from './layouts/AccountLayout'
 import Profile from './pages/account/Profile'
 import Settings from './pages/account/Settings'
 import Addresses from './pages/account/Addresses'
+import OrderHistory from './pages/account/OrderHistory'
+import OrderDetails from './pages/account/OrderDetails'
+import Wishlist from './pages/customer/Wishlist'
+import ForgotPassword from './pages/auth/ForgotPassword'
 
 function App() {
   return (
@@ -32,6 +36,7 @@ function App() {
               {/* Auth pages — standalone, no header/footer */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="/design-system" element={<DesignSystem />} />
 
               {/* Customer pages — share the CustomerLayout shell */}
@@ -58,11 +63,12 @@ function App() {
                   <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmation />} />
                   <Route path="/account" element={<AccountLayout />}>
                   <Route index element={<Profile />} />
-                  <Route path="orders" element={<Placeholder title="My Orders" phase="13" />} />
+                  <Route path="orders" element={<OrderHistory />} />
+                  <Route path="orders/:orderNumber" element={<OrderDetails />} />
                   <Route path="addresses" element={<Addresses />} />
                   <Route path="settings" element={<Settings />} />
                   </Route>
-                  <Route path="/wishlist" element={<Placeholder title="Wishlist" phase="13" />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
                 </Route>
 
                 {/* 404 inside the customer shell */}
