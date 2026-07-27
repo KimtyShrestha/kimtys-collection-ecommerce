@@ -7,6 +7,7 @@ import { sendSuccess } from './utils/response.js'
 import authRoutes from './routes/authRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
+import orderRoutes from './routes/orderRoutes.js'
 
 const app = express()
 
@@ -39,6 +40,7 @@ app.get('/api/health', async (req, res, next) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/categories', categoryRoutes)
+app.use('/api/orders', orderRoutes)
 // app.use('/api/products', productRoutes) Phase 9
 // ...
 
