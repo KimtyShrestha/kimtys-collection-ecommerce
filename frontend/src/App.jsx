@@ -9,6 +9,7 @@ import Register from './pages/auth/Register'
 import DesignSystem from './pages/DesignSystem'
 import Placeholder from './pages/Placeholder'
 import NotFound from './pages/NotFound'
+import Home from './pages/customer/Home'
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
             {/* Customer pages — share the CustomerLayout shell */}
             <Route element={<CustomerLayout />}>
               {/* Public */}
-              <Route path="/" element={<Placeholder title="Homepage" phase="8" />} />
+              <Route path="/" element={<Home />} />
               <Route path="/shop" element={<Placeholder title="Shop" phase="9" />} />
               <Route path="/categories" element={<Placeholder title="Categories" phase="9" />} />
               <Route path="/search" element={<Placeholder title="Search Results" phase="9" />} />
