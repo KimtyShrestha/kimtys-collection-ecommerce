@@ -16,6 +16,7 @@ Base URL: `http://localhost:5000/api`. All responses use the envelope
 |---|---|---|---|---|
 | GET | /products | Public | featured, newArrival, popular, sale (=true), limit (1–50) | Active products, newest first. Filters/search/pagination extended in Phase 9 |
 | GET | /products/:slug | Public | — | Full product detail. 404 if unknown/inactive |
+| GET | /products/:slug/related | Public | — | Up to 4 same-category products, excluding the product itself |
 
 ## Categories
 | Method | Route | Access | Notes |
