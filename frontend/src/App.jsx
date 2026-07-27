@@ -25,6 +25,11 @@ import OrderHistory from './pages/account/OrderHistory'
 import OrderDetails from './pages/account/OrderDetails'
 import Wishlist from './pages/customer/Wishlist'
 import ForgotPassword from './pages/auth/ForgotPassword'
+import About from './pages/customer/About'
+import Contact from './pages/customer/Contact'
+import Faq from './pages/customer/Faq'
+import Help from './pages/customer/Help'
+import { Shipping, Returns, Privacy, Terms } from './pages/customer/Policies'
 
 function App() {
   return (
@@ -48,14 +53,14 @@ function App() {
                 <Route path="/search" element={<Shop isSearch />} />
                 <Route path="/product/:slug" element={<ProductDetails />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/about" element={<Placeholder title="About Us" phase="15" />} />
-                <Route path="/contact" element={<Placeholder title="Contact" phase="15" />} />
-                <Route path="/faq" element={<Placeholder title="FAQ" phase="15" />} />
-                <Route path="/help" element={<Placeholder title="Help Centre" phase="15" />} />
-                <Route path="/shipping" element={<Placeholder title="Shipping Information" phase="15" />} />
-                <Route path="/returns" element={<Placeholder title="Returns Policy" phase="15" />} />
-                <Route path="/privacy" element={<Placeholder title="Privacy Policy" phase="15" />} />
-                <Route path="/terms" element={<Placeholder title="Terms & Conditions" phase="15" />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/faq" element={<Faq />} />
+                <Route path="/help" element={<Help />} />
+                <Route path="/shipping" element={<Shipping />} />
+                <Route path="/returns" element={<Returns />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/terms" element={<Terms />} />
 
                 {/* Logged-in customers only */}
                 <Route element={<ProtectedRoute />}>
