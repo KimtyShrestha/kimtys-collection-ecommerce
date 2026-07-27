@@ -71,4 +71,15 @@ Base URL: `http://localhost:5000/api`. All responses use the envelope
 | Method | Route | Access | Notes |
 |---|---|---|---|
 | GET | /admin/dashboard | Admin only | Totals (revenue, orders, products, customers, pending orders/reviews, low stock), 7-day order series, recent orders/customers, top products, category breakdown, low-stock list |
+| GET | /admin/products | Admin | Query: search, category, stockLevel (low/out), status (active/inactive), page, pageSize. Includes inactive products |
+| GET | /admin/products/:id | Admin | Full product incl. images |
+| POST | /admin/products | Admin | multipart/form-data; up to 4 images (JPG/PNG/WebP, ≤2 MB each); slug auto-generated and de-duplicated |
+| PUT | /admin/products/:id | Admin | Same shape; new images append; slug regenerated only if the name changed |
+| DELETE | /admin/products/:id | Admin | **Soft delete** (is_active = false) — order history must survive |
+| DELETE | /admin/products/:id/images/:imageId | Admin | Removes DB row + file; promotes a new primary if needed |
+| GET | /admin/categories | Admin | With product counts, incl. inactive |
+| POST/PUT | /admin/categories(/:id) | Admin | 409 on duplicate name |
+| DELETE | /admin/categories/:id | Admin | Refused (400) while the category holds products |
+
+
 
