@@ -21,3 +21,8 @@ export async function fetchCategories() {
   const response = await api.get('/categories')
   return response.data.data.categories
 }
+
+export async function fetchRelatedProducts(slug) {
+  const response = await api.get(`/products/${slug}/related`)
+  return response.data.data.products
+}

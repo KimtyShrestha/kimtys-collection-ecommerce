@@ -12,6 +12,7 @@ import NotFound from './pages/NotFound'
 import Home from './pages/customer/Home'
 import Shop from './pages/customer/Shop'
 import Categories from './pages/customer/Categories'  
+import ProductDetails from './pages/customer/ProductDetails'
 
 function App() {
   return (
@@ -31,7 +32,7 @@ function App() {
               <Route path="/shop" element={<Shop />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/search" element={<Shop isSearch />} />
-              <Route path="/product/:slug" element={<Placeholder title="Product Details" phase="10" />} />
+              <Route path="/product/:slug" element={<ProductDetails />} />
               <Route path="/cart" element={<Placeholder title="Shopping Cart" phase="11" />} />
               <Route path="/about" element={<Placeholder title="About Us" phase="15" />} />
               <Route path="/contact" element={<Placeholder title="Contact" phase="15" />} />
