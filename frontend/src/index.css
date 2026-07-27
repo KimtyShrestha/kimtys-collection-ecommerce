@@ -1,1 +1,25 @@
 @import "tailwindcss";
+@import "@fontsource-variable/inter";
+
+@theme {
+  /* Typography — single family across the whole application */
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand colours */
+  --color-primary: #2563eb;         /* Royal blue — buttons, links, active nav */
+  --color-primary-hover: #1d4ed8;   /* Hover / pressed */
+  --color-primary-light: #eff6ff;   /* Very light blue — panels, highlights */
+  --color-primary-border: #bfdbfe;  /* Borders on light-blue panels */
+
+  /* Feedback colours — status communication only */
+  --color-success: #16a34a;
+  --color-success-light: #f0fdf4;
+  --color-warning: #d97706;
+  --color-warning-light: #fffbeb;
+  --color-danger: #dc2626;
+  --color-danger-light: #fef2f2;
+}
+
+body {
+  @apply bg-white font-sans text-gray-600 antialiased;
+}
