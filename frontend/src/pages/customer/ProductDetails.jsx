@@ -24,6 +24,7 @@ import ProductCard from '../../components/product/ProductCard'
 import PriceDisplay from '../../components/product/PriceDisplay'
 import { useCart } from '../../context/CartContext'
 import { apiAddToWishlist, apiRemoveFromWishlist, apiGetWishlistIds } from '../../services/accountService'
+import ReviewSection from '../../components/product/ReviewSection'
 
 const API_ORIGIN = import.meta.env.VITE_API_URL.replace(/\/api$/, '')
 
@@ -305,6 +306,9 @@ function ProductDetails() {
               {product.description || 'No description available for this product yet.'}
             </p>
           </section>
+
+          {/* ===== Reviews ===== */}
+          <ReviewSection productId={product.id} slug={slug} />
 
           {/* ===== Related products ===== */}
           {related.length > 0 && (
