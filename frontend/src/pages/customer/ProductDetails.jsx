@@ -23,6 +23,7 @@ import EmptyState from '../../components/ui/EmptyState'
 import ProductCard from '../../components/product/ProductCard'
 import PriceDisplay from '../../components/product/PriceDisplay'
 import { useCart } from '../../context/CartContext'
+import { apiAddToWishlist, apiRemoveFromWishlist, apiGetWishlistIds } from '../../services/accountService'
 
 const API_ORIGIN = import.meta.env.VITE_API_URL.replace(/\/api$/, '')
 
@@ -54,11 +55,13 @@ function ProductDetails() {
   const navigate = useNavigate()
   const { user } = useAuth()
   const { toast } = useToast()
+  const { addItem } = useCart()
 
   const [product, setProduct] = useState(null)
   const [related, setRelated] = useState([])
   const [status, setStatus] = useState('loading') // loading | ready | notfound | error
   const [quantity, setQuantity] = useState(1)
+  const [wishlisted, setWishlisted] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -85,19 +88,42 @@ function ProductDetails() {
     return () => { cancelled = true }
   }, [slug])
 
+  useEffect(() => {
+    let cancelled = false
+    setWishlisted(false)
+    if (user && product) {
+      apiGetWishlistIds()
+        .then((ids) => { if (!cancelled) setWishlisted(ids.includes(product.id)) })
+        .catch(() => {})
+    }
+    return () => { cancelled = true }
+  }, [user, product])
+
+
   function onAddToCart() {
     addItem(product, quantity)
     toast(`Added ${quantity} × ${product.name} to your cart.`, 'success')
   }
 
-  function onWishlist() {
+  async function onWishlist() {
     if (!user) {
       toast('Please log in to save items to your wishlist.', 'info')
       navigate('/login', { state: { from: `/product/${slug}` } })
       return
     }
-    // Persisted in Phase 13.
-    toast(`${product.name} saved to your wishlist.`, 'success')
+    try {
+      if (wishlisted) {
+        await apiRemoveFromWishlist(product.id)
+        setWishlisted(false)
+        toast(`${product.name} removed from your wishlist.`, 'success')
+      } else {
+        await apiAddToWishlist(product.id)
+        setWishlisted(true)
+        toast(`${product.name} saved to your wishlist.`, 'success')
+      }
+    } catch (error) {
+      toast(error.message, 'error')
+    }
   }
 
   if (status === 'notfound') {
@@ -246,7 +272,10 @@ function ProductDetails() {
                   onClick={onWishlist}
                   aria-label="Save to wishlist"
                 >
-                  <Heart className="h-4 w-4" aria-hidden="true" />
+                  <Heart
+                    className={`h-4 w-4 ${wishlisted ? 'fill-danger text-danger' : ''}`}
+                    aria-hidden="true"
+                  />
                   <span className="hidden sm:inline">Wishlist</span>
                 </Button>
               </div>
