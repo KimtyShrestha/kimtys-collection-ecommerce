@@ -23,6 +23,13 @@ Base URL: `http://localhost:5000/api`. All responses use the envelope
 |---|---|---|---|
 | GET | /categories | Public | Active categories in sort order, with live product counts |
 
+## Orders
+| Method | Route | Access | Body | Notes |
+|---|---|---|---|---|
+| POST | /orders | Logged in | items[{productId, quantity}], paymentMethod (cod, esewa, khalti), shipping{name, phone, city, area, street?, landmark?} | Transactional: revalidates price/stock server-side (client prices ignored), locks rows, snapshots shipping + product name/price, decrements stock, generates KC-YYYY-NNNN. Delivery Rs. 100, free ≥ Rs. 3,000 |
+| GET | /orders/:orderNumber | Owner | — | Full order with items. 404 if not owner |
+
+
 ## Misc
 | Method | Route | Notes |
 |---|---|---|
