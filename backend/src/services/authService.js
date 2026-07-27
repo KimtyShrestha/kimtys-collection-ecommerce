@@ -61,3 +61,40 @@ export async function loginUser({ email, password }) {
 
   return { user: publicUser(user), token: signToken(user) }
 }
+
+// --- Simulated password reset (academic demonstration) ---
+// Real deployments email the token; here it is returned directly
+// and labelled as simulated in the UI.
+
+export async function createResetToken(email) {
+  const result = await query(
+    'SELECT id FROM users WHERE email = $1 AND is_active = TRUE',
+    [email]
+  )
+  // Always behave identically whether or not the email exists.
+  if (result.rowCount === 0) return null
+
+  const token = jwt.sign(
+    { id: result.rows[0].id, purpose: 'reset' },
+    env.jwt.secret,
+    { expiresIn: '15m' }
+  )
+  return token
+}
+
+export async function resetPassword(token, newPassword) {
+  let payload
+  try {
+    payload = jwt.verify(token, env.jwt.secret)
+  } catch {
+    throw new ApiError(400, 'This reset link is invalid or has expired.')
+  }
+  if (payload.purpose !== 'reset') {
+    throw new ApiError(400, 'This reset link is invalid or has expired.')
+  }
+  const passwordHash = await bcrypt.hash(newPassword, SALT_ROUNDS)
+  await query(
+    'UPDATE users SET password_hash = $1, updated_at = NOW() WHERE id = $2',
+    [passwordHash, payload.id]
+  )
+}

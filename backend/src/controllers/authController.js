@@ -1,4 +1,4 @@
-import { registerUser, loginUser } from '../services/authService.js'
+import { registerUser, loginUser, createResetToken, resetPassword } from '../services/authService.js'
 import { sendSuccess } from '../utils/response.js'
 
 export async function register(req, res, next) {
@@ -9,6 +9,7 @@ export async function register(req, res, next) {
       message: 'Account created successfully.',
       data,
     })
+
   } catch (error) {
     next(error)
   }
@@ -37,4 +38,27 @@ export function me(req, res) {
       },
     },
   })
+}
+
+// POST /api/auth/forgot-password — simulated (token returned, not emailed)
+export async function forgotPassword(req, res, next) {
+  try {
+    const token = await createResetToken(req.body.email)
+    sendSuccess(res, {
+      message: 'If an account exists for this email, a reset link has been generated.',
+      data: token ? { resetToken: token, simulated: true } : { simulated: true },
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+// POST /api/auth/reset-password
+export async function postResetPassword(req, res, next) {
+  try {
+    await resetPassword(req.body.token, req.body.newPassword)
+    sendSuccess(res, { message: 'Password reset successfully. You can now log in.' })
+  } catch (error) {
+    next(error)
+  }
 }
