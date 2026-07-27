@@ -5,6 +5,8 @@ import { query } from './config/db.js'
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js'
 import { sendSuccess } from './utils/response.js'
 import authRoutes from './routes/authRoutes.js'
+import productRoutes from './routes/productRoutes.js'
+import categoryRoutes from './routes/categoryRoutes.js'
 
 const app = express()
 
@@ -35,6 +37,8 @@ app.get('/api/health', async (req, res, next) => {
 
 // --- API routes (registered here in later phases) ---
 app.use('/api/auth', authRoutes)
+app.use('/api/products', productRoutes)
+app.use('/api/categories', categoryRoutes)
 // app.use('/api/products', productRoutes) Phase 9
 // ...
 
