@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
+import { useCart } from '../../context/CartContext'
+
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import {
   ShoppingCart,
@@ -31,6 +33,7 @@ function navClasses({ isActive }) {
 
 function Header() {
   const { user, logout } = useAuth()
+  const { count } = useCart()
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [accountOpen, setAccountOpen] = useState(false)
@@ -88,10 +91,15 @@ function Header() {
 
           <Link
             to="/cart"
-            aria-label="Shopping cart"
-            className="rounded-md p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+            aria-label={`Shopping cart, ${count} ${count === 1 ? 'item' : 'items'}`}
+            className="relative rounded-md p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
           >
             <ShoppingCart className="h-5 w-5" />
+            {count > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[11px] font-semibold text-white">
+                {count > 99 ? '99+' : count}
+              </span>
+            )}
           </Link>
 
           {/* Account */}
