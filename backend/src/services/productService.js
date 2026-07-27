@@ -81,3 +81,19 @@ export async function getProductBySlug(slug) {
     colour: row.colour,
   }
 }
+
+// Related products: same category, excluding the product itself.
+export async function getRelatedProducts(slug, limit = 4) {
+  const result = await query(
+    `SELECT ${LIST_COLUMNS}
+     FROM products p
+     JOIN categories c ON c.id = p.category_id
+     WHERE p.is_active = TRUE
+       AND p.slug <> $1
+       AND p.category_id = (SELECT category_id FROM products WHERE slug = $1)
+     ORDER BY p.is_popular DESC, p.created_at DESC
+     LIMIT $2`,
+    [slug, Math.min(8, Math.max(1, Number(limit) || 4))]
+  )
+  return result.rows.map(mapProduct)
+}
