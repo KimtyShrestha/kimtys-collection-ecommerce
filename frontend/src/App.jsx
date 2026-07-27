@@ -15,6 +15,8 @@ import Shop from './pages/customer/Shop'
 import Categories from './pages/customer/Categories'
 import ProductDetails from './pages/customer/ProductDetails'
 import Cart from './pages/customer/Cart'
+import Checkout from './pages/customer/Checkout'
+import OrderConfirmation from './pages/customer/OrderConfirmation'
 
 function App() {
   return (
@@ -48,7 +50,8 @@ function App() {
 
                 {/* Logged-in customers only */}
                 <Route element={<ProtectedRoute />}>
-                  <Route path="/checkout" element={<Placeholder title="Checkout" phase="12" />} />
+                  <Route path="/checkout" element={<Checkout />} />
+                  <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmation />} />
                   <Route path="/account" element={<Placeholder title="My Account" phase="13" />} />
                   <Route path="/account/orders" element={<Placeholder title="My Orders" phase="13" />} />
                   <Route path="/wishlist" element={<Placeholder title="Wishlist" phase="13" />} />
