@@ -1,8 +1,15 @@
 import api from './api'
 
-export async function fetchProducts(params = {}) {
+// Returns { products, total, page, pageSize, totalPages }.
+export async function fetchProductList(params = {}) {
   const response = await api.get('/products', { params })
-  return response.data.data.products
+  return response.data.data
+}
+
+// Convenience for places that only need the array (homepage sections).
+export async function fetchProducts(params = {}) {
+  const data = await fetchProductList(params)
+  return data.products
 }
 
 export async function fetchProductBySlug(slug) {

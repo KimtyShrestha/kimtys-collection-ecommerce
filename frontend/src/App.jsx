@@ -10,6 +10,8 @@ import DesignSystem from './pages/DesignSystem'
 import Placeholder from './pages/Placeholder'
 import NotFound from './pages/NotFound'
 import Home from './pages/customer/Home'
+import Shop from './pages/customer/Shop'
+import Categories from './pages/customer/Categories'  
 
 function App() {
   return (
@@ -26,9 +28,9 @@ function App() {
             <Route element={<CustomerLayout />}>
               {/* Public */}
               <Route path="/" element={<Home />} />
-              <Route path="/shop" element={<Placeholder title="Shop" phase="9" />} />
-              <Route path="/categories" element={<Placeholder title="Categories" phase="9" />} />
-              <Route path="/search" element={<Placeholder title="Search Results" phase="9" />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/search" element={<Shop isSearch />} />
               <Route path="/product/:slug" element={<Placeholder title="Product Details" phase="10" />} />
               <Route path="/cart" element={<Placeholder title="Shopping Cart" phase="11" />} />
               <Route path="/about" element={<Placeholder title="About Us" phase="15" />} />
