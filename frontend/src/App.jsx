@@ -1,49 +1,14 @@
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import { AuthProvider, useAuth } from './context/AuthContext'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
 import { ToastProvider } from './context/ToastContext'
+import CustomerLayout from './layouts/CustomerLayout'
 import ProtectedRoute from './routes/ProtectedRoute'
 import AdminRoute from './routes/AdminRoute'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import DesignSystem from './pages/DesignSystem'
-import Button from './components/ui/Button'
-
-// Temporary homepage — replaced by the real layout in Phase 7.
-function TempHome() {
-  const { user, logout } = useAuth()
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-4 px-4 text-center">
-      <h1 className="text-3xl font-semibold text-gray-900">Kimty's Collection</h1>
-      {user ? (
-        <>
-          <p className="text-gray-600">
-            Logged in as <span className="font-medium text-gray-900">{user.fullName}</span> ({user.role})
-          </p>
-          <Button variant="secondary" onClick={logout}>Log Out</Button>
-        </>
-      ) : (
-        <>
-          <p className="text-gray-600">You are browsing as a guest.</p>
-          <div className="flex gap-3">
-            <Link to="/login"><Button>Log In</Button></Link>
-            <Link to="/register"><Button variant="outline">Create Account</Button></Link>
-          </div>
-        </>
-      )}
-      <p className="mt-4 text-sm text-gray-400">
-        Temporary page — the real homepage arrives in Phase 8.
-      </p>
-    </div>
-  )
-}
-
-// Temporary protected pages to prove the guards work.
-function TempAccount() {
-  return <div className="p-10 text-gray-900">Account area (customers only) — real version in Phase 13.</div>
-}
-function TempAdmin() {
-  return <div className="p-10 text-gray-900">Admin dashboard (admins only) — real version in Phase 16.</div>
-}
+import Placeholder from './pages/Placeholder'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -51,20 +16,47 @@ function App() {
       <AuthProvider>
         <ToastProvider>
           <Routes>
-            {/* Public */}
-            <Route path="/" element={<TempHome />} />
+            {/* Auth pages — standalone, no header/footer */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/design-system" element={<DesignSystem />} />
 
-            {/* Customers (and admins) — must be logged in */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="/account" element={<TempAccount />} />
+            {/* Customer pages — share the CustomerLayout shell */}
+            <Route element={<CustomerLayout />}>
+              {/* Public */}
+              <Route path="/" element={<Placeholder title="Homepage" phase="8" />} />
+              <Route path="/shop" element={<Placeholder title="Shop" phase="9" />} />
+              <Route path="/categories" element={<Placeholder title="Categories" phase="9" />} />
+              <Route path="/search" element={<Placeholder title="Search Results" phase="9" />} />
+              <Route path="/product/:slug" element={<Placeholder title="Product Details" phase="10" />} />
+              <Route path="/cart" element={<Placeholder title="Shopping Cart" phase="11" />} />
+              <Route path="/about" element={<Placeholder title="About Us" phase="15" />} />
+              <Route path="/contact" element={<Placeholder title="Contact" phase="15" />} />
+              <Route path="/faq" element={<Placeholder title="FAQ" phase="15" />} />
+              <Route path="/help" element={<Placeholder title="Help Centre" phase="15" />} />
+              <Route path="/shipping" element={<Placeholder title="Shipping Information" phase="15" />} />
+              <Route path="/returns" element={<Placeholder title="Returns Policy" phase="15" />} />
+              <Route path="/privacy" element={<Placeholder title="Privacy Policy" phase="15" />} />
+              <Route path="/terms" element={<Placeholder title="Terms & Conditions" phase="15" />} />
+
+              {/* Logged-in customers only */}
+              <Route element={<ProtectedRoute />}>
+                <Route path="/checkout" element={<Placeholder title="Checkout" phase="12" />} />
+                <Route path="/account" element={<Placeholder title="My Account" phase="13" />} />
+                <Route path="/account/orders" element={<Placeholder title="My Orders" phase="13" />} />
+                <Route path="/wishlist" element={<Placeholder title="Wishlist" phase="13" />} />
+              </Route>
+
+              {/* 404 inside the customer shell */}
+              <Route path="*" element={<NotFound />} />
             </Route>
 
-            {/* Admins only */}
+            {/* Admin — separate shell arrives in Phase 16 */}
             <Route element={<AdminRoute />}>
-              <Route path="/admin" element={<TempAdmin />} />
+              <Route
+                path="/admin"
+                element={<Placeholder title="Admin Dashboard" phase="16" />}
+              />
             </Route>
           </Routes>
         </ToastProvider>
