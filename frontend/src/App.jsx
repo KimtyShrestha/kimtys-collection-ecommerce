@@ -17,6 +17,10 @@ import ProductDetails from './pages/customer/ProductDetails'
 import Cart from './pages/customer/Cart'
 import Checkout from './pages/customer/Checkout'
 import OrderConfirmation from './pages/customer/OrderConfirmation'
+import AccountLayout from './layouts/AccountLayout'
+import Profile from './pages/account/Profile'
+import Settings from './pages/account/Settings'
+import Addresses from './pages/account/Addresses'
 
 function App() {
   return (
@@ -52,8 +56,12 @@ function App() {
                 <Route element={<ProtectedRoute />}>
                   <Route path="/checkout" element={<Checkout />} />
                   <Route path="/order-confirmation/:orderNumber" element={<OrderConfirmation />} />
-                  <Route path="/account" element={<Placeholder title="My Account" phase="13" />} />
-                  <Route path="/account/orders" element={<Placeholder title="My Orders" phase="13" />} />
+                  <Route path="/account" element={<AccountLayout />}>
+                  <Route index element={<Profile />} />
+                  <Route path="orders" element={<Placeholder title="My Orders" phase="13" />} />
+                  <Route path="addresses" element={<Addresses />} />
+                  <Route path="settings" element={<Settings />} />
+                  </Route>
                   <Route path="/wishlist" element={<Placeholder title="Wishlist" phase="13" />} />
                 </Route>
 
