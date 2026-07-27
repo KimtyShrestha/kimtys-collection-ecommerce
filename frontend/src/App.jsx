@@ -31,6 +31,8 @@ import Help from './pages/customer/Help'
 import { Shipping, Returns, Privacy, Terms } from './pages/customer/Policies'
 import AdminLayout from './layouts/AdminLayout'
 import Dashboard from './pages/admin/Dashboard'
+import AdminProducts from './pages/admin/AdminProducts'
+import AdminProductForm from './pages/admin/AdminProductForm'
 
 function App() {
   return (
@@ -82,10 +84,12 @@ function App() {
               </Route>
 
               {/* Admin — own shell, role-guarded */}
-              <Route element={<AdminRoute />}>
-                <Route path="/admin" element={<AdminLayout />}>
-                  <Route index element={<Dashboard />} />
-              </Route>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="products" element={<AdminProducts />} />
+                <Route path="products/new" element={<AdminProductForm />} />
+                <Route path="products/:id/edit" element={<AdminProductForm />} />
+
             </Route>
             </Routes>
           </ToastProvider>
