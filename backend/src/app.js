@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import env from './config/env.js'
+import { query } from './config/db.js'
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js'
 import { sendSuccess } from './utils/response.js'
 
@@ -14,15 +15,21 @@ app.use(express.urlencoded({ extended: true }))
 // Serve uploaded product images as static files.
 app.use('/uploads', express.static('uploads'))
 
-// --- Health check ---
-app.get('/api/health', (req, res) => {
-  sendSuccess(res, {
-    message: 'Kimty\'s Collection API is running.',
-    data: {
-      environment: env.nodeEnv,
-      timestamp: new Date().toISOString(),
-    },
-  })
+// --- Health check (now also verifies database connectivity) ---
+app.get('/api/health', async (req, res, next) => {
+  try {
+    const result = await query('SELECT NOW() AS db_time')
+    sendSuccess(res, {
+      message: 'Kimty\'s Collection API is running.',
+      data: {
+        environment: env.nodeEnv,
+        database: 'connected',
+        dbTime: result.rows[0].db_time,
+      },
+    })
+  } catch (error) {
+    next(error)
+  }
 })
 
 // --- API routes (registered here in later phases) ---
