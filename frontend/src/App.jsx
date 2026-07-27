@@ -8,7 +8,6 @@ import AdminRoute from './routes/AdminRoute'
 import Login from './pages/auth/Login'
 import Register from './pages/auth/Register'
 import DesignSystem from './pages/DesignSystem'
-import Placeholder from './pages/Placeholder'
 import NotFound from './pages/NotFound'
 import Home from './pages/customer/Home'
 import Shop from './pages/customer/Shop'
@@ -30,6 +29,8 @@ import Contact from './pages/customer/Contact'
 import Faq from './pages/customer/Faq'
 import Help from './pages/customer/Help'
 import { Shipping, Returns, Privacy, Terms } from './pages/customer/Policies'
+import AdminLayout from './layouts/AdminLayout'
+import Dashboard from './pages/admin/Dashboard'
 
 function App() {
   return (
@@ -80,13 +81,12 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Route>
 
-              {/* Admin — separate shell arrives in Phase 16 */}
+              {/* Admin — own shell, role-guarded */}
               <Route element={<AdminRoute />}>
-                <Route
-                  path="/admin"
-                  element={<Placeholder title="Admin Dashboard" phase="16" />}
-                />
+                <Route path="/admin" element={<AdminLayout />}>
+                  <Route index element={<Dashboard />} />
               </Route>
+            </Route>
             </Routes>
           </ToastProvider>
         </CartProvider>
