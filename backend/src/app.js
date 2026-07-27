@@ -8,6 +8,9 @@ import authRoutes from './routes/authRoutes.js'
 import productRoutes from './routes/productRoutes.js'
 import categoryRoutes from './routes/categoryRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+import addressRoutes from './routes/addressRoutes.js'
+import wishlistRoutes from './routes/wishlistRoutes.js'
 
 const app = express()
 
@@ -41,6 +44,9 @@ app.use('/api/auth', authRoutes)
 app.use('/api/products', productRoutes)
 app.use('/api/categories', categoryRoutes)
 app.use('/api/orders', orderRoutes)
+app.use('/api/users', userRoutes)
+app.use('/api/addresses', addressRoutes)
+app.use('/api/wishlist', wishlistRoutes)
 // app.use('/api/products', productRoutes) Phase 9
 // ...
 

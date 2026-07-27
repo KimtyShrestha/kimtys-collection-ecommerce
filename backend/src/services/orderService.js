@@ -166,3 +166,25 @@ export async function getOrderByNumber(userId, orderNumber) {
 
   return mapOrder(order, itemsResult.rows)
 }
+
+// Order history for the logged-in customer (newest first).
+export async function listUserOrders(userId) {
+  const result = await query(
+    `SELECT o.order_number, o.status, o.payment_method, o.total, o.created_at,
+            COUNT(oi.id) AS item_count
+     FROM orders o
+     JOIN order_items oi ON oi.order_id = o.id
+     WHERE o.user_id = $1
+     GROUP BY o.id
+     ORDER BY o.created_at DESC`,
+    [userId]
+  )
+  return result.rows.map((row) => ({
+    orderNumber: row.order_number,
+    status: row.status,
+    paymentMethod: row.payment_method,
+    total: Number(row.total),
+    itemCount: Number(row.item_count),
+    createdAt: row.created_at,
+  }))
+}

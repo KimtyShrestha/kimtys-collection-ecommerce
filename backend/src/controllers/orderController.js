@@ -1,4 +1,5 @@
-import { createOrder, getOrderByNumber } from '../services/orderService.js'
+import { createOrder, getOrderByNumber, listUserOrders } from '../services/orderService.js'
+
 import { sendSuccess } from '../utils/response.js'
 
 // POST /api/orders — logged-in customers
@@ -23,6 +24,16 @@ export async function getOrder(req, res, next) {
       message: 'Order retrieved successfully.',
       data: { order },
     })
+  } catch (error) {
+    next(error)
+  }
+}
+
+// GET /api/orders — history for the logged-in customer
+export async function getMyOrders(req, res, next) {
+  try {
+    const orders = await listUserOrders(req.user.id)
+    sendSuccess(res, { message: 'Orders retrieved successfully.', data: { orders } })
   } catch (error) {
     next(error)
   }

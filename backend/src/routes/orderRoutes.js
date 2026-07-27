@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { placeOrder, getOrder } from '../controllers/orderController.js'
+import { placeOrder, getOrder, getMyOrders } from '../controllers/orderController.js'
 import { createOrderRules } from '../validators/orderValidators.js'
 import { validate } from '../middleware/validate.js'
 import { requireAuth } from '../middleware/auth.js'
@@ -8,6 +8,9 @@ const router = Router()
 
 // All order routes require login.
 router.use(requireAuth)
+
+// GET /api/orders — order history
+router.get('/', getMyOrders)
 
 // POST /api/orders
 router.post('/', createOrderRules, validate, placeOrder)
