@@ -53,8 +53,17 @@ Base URL: `http://localhost:5000/api`. All responses use the envelope
 
 (Orders: GET /orders now also returns the customer's order history.)
 
+## Reviews
+| Method | Route | Access | Notes |
+|---|---|---|---|
+| GET | /products/:slug/reviews | Public (richer when logged in) | Approved reviews + viewer's own (any status); summary counts approved only |
+| POST | /reviews | Logged in | { productId, rating 1–5, title?, comment? } — one per product; starts pending |
+| PUT | /reviews/:id | Owner | Editing resets status to pending |
+| DELETE | /reviews/:id | Owner | — |
+
 
 ## Misc
 | Method | Route | Notes |
 |---|---|---|
 | GET | /health | API + database connectivity check |
+
