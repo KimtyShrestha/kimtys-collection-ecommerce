@@ -13,6 +13,16 @@ const env = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
   },
+
+  jwt: {
+    secret: process.env.JWT_SECRET,
+    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
+  },
+}
+
+if (!env.jwt.secret) {
+  console.error('FATAL: JWT_SECRET is not set in backend/.env')
+  process.exit(1)
 }
 
 export default env

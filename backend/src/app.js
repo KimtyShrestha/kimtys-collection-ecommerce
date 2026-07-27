@@ -4,6 +4,7 @@ import env from './config/env.js'
 import { query } from './config/db.js'
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js'
 import { sendSuccess } from './utils/response.js'
+import authRoutes from './routes/authRoutes.js'
 
 const app = express()
 
@@ -33,7 +34,7 @@ app.get('/api/health', async (req, res, next) => {
 })
 
 // --- API routes (registered here in later phases) ---
-// app.use('/api/auth', authRoutes)        Phase 6
+app.use('/api/auth', authRoutes)
 // app.use('/api/products', productRoutes) Phase 9
 // ...
 
