@@ -22,6 +22,7 @@ import QuantitySelector from '../../components/ui/QuantitySelector'
 import EmptyState from '../../components/ui/EmptyState'
 import ProductCard from '../../components/product/ProductCard'
 import PriceDisplay from '../../components/product/PriceDisplay'
+import { useCart } from '../../context/CartContext'
 
 const API_ORIGIN = import.meta.env.VITE_API_URL.replace(/\/api$/, '')
 
@@ -85,7 +86,7 @@ function ProductDetails() {
   }, [slug])
 
   function onAddToCart() {
-    // Wired to CartContext in Phase 11 — same call signature.
+    addItem(product, quantity)
     toast(`Added ${quantity} × ${product.name} to your cart.`, 'success')
   }
 

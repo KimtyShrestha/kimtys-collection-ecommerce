@@ -1,15 +1,26 @@
 import { Link } from 'react-router-dom'
-import { ImageIcon } from 'lucide-react'
+import { ImageIcon, ShoppingCart } from 'lucide-react'
 import Badge from '../ui/Badge'
 import PriceDisplay from './PriceDisplay'
+import { useCart } from '../../context/CartContext'
+import { useToast } from '../../context/ToastContext'
 
 const API_ORIGIN = import.meta.env.VITE_API_URL.replace(/\/api$/, '')
 
 // The single product card used across the whole store.
-// Whole card is one link (large touch target); image area shows a
-// neutral placeholder until product images arrive (Phase 17/22).
 function ProductCard({ product }) {
+  const { addItem } = useCart()
+  const { toast } = useToast()
   const onSale = product.discountPrice !== null && product.discountPrice !== undefined
+  const inStock = product.stock > 0
+
+  function onQuickAdd(event) {
+    // The whole card is a link — stop the click from navigating.
+    event.preventDefault()
+    event.stopPropagation()
+    addItem(product, 1)
+    toast(`Added ${product.name} to your cart.`, 'success')
+  }
 
   return (
     <Link
@@ -35,8 +46,20 @@ function ProductCard({ product }) {
         <div className="absolute left-3 top-3 flex flex-col items-start gap-1.5">
           {onSale && <Badge variant="danger">Sale</Badge>}
           {product.isNewArrival && <Badge variant="primary">New</Badge>}
-          {product.stock === 0 && <Badge variant="neutral">Out of Stock</Badge>}
+          {!inStock && <Badge variant="neutral">Out of Stock</Badge>}
         </div>
+
+        {/* Quick add — appears on hover (desktop); always tappable on touch */}
+        {inStock && (
+          <button
+            type="button"
+            onClick={onQuickAdd}
+            aria-label={`Add ${product.name} to cart`}
+            className="absolute bottom-3 right-3 flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-600 shadow-md transition-all hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 lg:opacity-0 lg:group-hover:opacity-100 lg:focus-visible:opacity-100"
+          >
+            <ShoppingCart className="h-4 w-4" aria-hidden="true" />
+          </button>
+        )}
       </div>
 
       {/* Info */}
