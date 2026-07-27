@@ -33,6 +33,7 @@ import AdminLayout from './layouts/AdminLayout'
 import Dashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/AdminProducts'
 import AdminProductForm from './pages/admin/AdminProductForm'
+import AdminCategories from './pages/admin/AdminCategories'
 
 function App() {
   return (
@@ -89,6 +90,7 @@ function App() {
                 <Route path="products" element={<AdminProducts />} />
                 <Route path="products/new" element={<AdminProductForm />} />
                 <Route path="products/:id/edit" element={<AdminProductForm />} />
+                <Route path="categories" element={<AdminCategories />} />
 
             </Route>
             </Routes>
