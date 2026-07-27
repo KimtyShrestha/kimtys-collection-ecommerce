@@ -11,6 +11,7 @@ import orderRoutes from './routes/orderRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import addressRoutes from './routes/addressRoutes.js'
 import wishlistRoutes from './routes/wishlistRoutes.js'
+import reviewRoutes from './routes/reviewRoutes.js'
 
 const app = express()
 
@@ -47,6 +48,7 @@ app.use('/api/orders', orderRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/addresses', addressRoutes)
 app.use('/api/wishlist', wishlistRoutes)
+app.use('/api/reviews', reviewRoutes)
 // app.use('/api/products', productRoutes) Phase 9
 // ...
 

@@ -45,3 +45,30 @@ export function requireAdmin(req, res, next) {
   }
   next()
 }
+
+// Attaches req.user when a valid token is present, but never blocks.
+// Used on public routes whose response is richer for logged-in users.
+export async function attachUserIfPresent(req, res, next) {
+  try {
+    const header = req.headers.authorization || ''
+    const token = header.startsWith('Bearer ') ? header.slice(7) : null
+    if (!token) return next()
+
+    let payload
+    try {
+      payload = jwt.verify(token, env.jwt.secret)
+    } catch {
+      return next() // invalid token = treat as guest
+    }
+
+    const result = await query(
+      'SELECT id, full_name, email, phone, role, is_active FROM users WHERE id = $1',
+      [payload.id]
+    )
+    const user = result.rows[0]
+    if (user && user.is_active) req.user = user
+    next()
+  } catch (error) {
+    next(error)
+  }
+}
