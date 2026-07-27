@@ -29,6 +29,30 @@ Base URL: `http://localhost:5000/api`. All responses use the envelope
 | POST | /orders | Logged in | items[{productId, quantity}], paymentMethod (cod, esewa, khalti), shipping{name, phone, city, area, street?, landmark?} | Transactional: revalidates price/stock server-side (client prices ignored), locks rows, snapshots shipping + product name/price, decrements stock, generates KC-YYYY-NNNN. Delivery Rs. 100, free ≥ Rs. 3,000 |
 | GET | /orders/:orderNumber | Owner | — | Full order with items. 404 if not owner |
 
+## Users
+| Method | Route | Access | Body | Notes |
+|---|---|---|---|---|
+| PUT | /users/profile | Logged in | fullName, phone? | Returns updated user |
+| PUT | /users/password | Logged in | currentPassword, newPassword | 401 if current wrong; generic success |
+
+## Addresses
+| Method | Route | Access | Notes |
+|---|---|---|---|
+| GET | /addresses | Logged in | Default first, then newest |
+| POST | /addresses | Logged in | First address auto-default; isDefault=true reassigns transactionally |
+| PUT | /addresses/:id | Logged in | Owner only; 404 otherwise |
+| DELETE | /addresses/:id | Logged in | Deleting the default promotes the newest remaining |
+
+## Wishlist
+| Method | Route | Access | Notes |
+|---|---|---|---|
+| GET | /wishlist | Logged in | Full product cards |
+| GET | /wishlist/ids | Logged in | Product ids only (for heart states) |
+| POST | /wishlist | Logged in | { productId } — idempotent |
+| DELETE | /wishlist/:productId | Logged in | — |
+
+(Orders: GET /orders now also returns the customer's order history.)
+
 
 ## Misc
 | Method | Route | Notes |
