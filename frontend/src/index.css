@@ -23,3 +23,15 @@
 body {
   @apply bg-white font-sans text-gray-600 antialiased;
 }
+
+/* Respect users who prefer reduced motion (vestibular disorders). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
