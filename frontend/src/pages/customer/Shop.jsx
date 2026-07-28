@@ -10,6 +10,7 @@ import Button from '../../components/ui/Button'
 import EmptyState from '../../components/ui/EmptyState'
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import ErrorState from '../../components/ui/ErrorState'
 
 const SORT_CHOICES = [
   { value: 'newest', label: 'Newest' },
@@ -58,32 +59,33 @@ function Shop({ isSearch = false }) {
     fetchCategories().then(setCategories).catch(() => setCategories([]))
   }, [])
 
-  useEffect(() => {
-    let cancelled = false
-    setResult(null)
-    setFailed(false)
+  function loadProducts() {
+  setResult(null)
+  setFailed(false)
 
-    fetchProductList({
-      search: queryText || undefined,
-      category: values.category || undefined,
-      age: values.age || undefined,
-      minPrice: values.minPrice || undefined,
-      maxPrice: values.maxPrice || undefined,
-      inStock: values.inStock || undefined,
-      sale: values.sale || (filterFlag === 'sale' ? 'true' : undefined),
-      featured: filterFlag === 'featured' ? 'true' : undefined,
-      newArrival: filterFlag === 'new' ? 'true' : undefined,
-      popular: filterFlag === 'popular' ? 'true' : undefined,
-      sort: values.sort,
-      page: values.page,
-      pageSize: 12,
-    })
-      .then((data) => { if (!cancelled) setResult(data) })
-      .catch(() => { if (!cancelled) setFailed(true) })
+  fetchProductList({
+    search: queryText || undefined,
+    category: values.category || undefined,
+    age: values.age || undefined,
+    minPrice: values.minPrice || undefined,
+    maxPrice: values.maxPrice || undefined,
+    inStock: values.inStock || undefined,
+    sale: values.sale || (filterFlag === 'sale' ? 'true' : undefined),
+    featured: filterFlag === 'featured' ? 'true' : undefined,
+    newArrival: filterFlag === 'new' ? 'true' : undefined,
+    popular: filterFlag === 'popular' ? 'true' : undefined,
+    sort: values.sort,
+    page: values.page,
+    pageSize: 12,
+  })
+    .then(setResult)
+    .catch(() => setFailed(true))
+}
 
-    return () => { cancelled = true }
-  }, [searchParams]) // eslint-disable-line react-hooks/exhaustive-deps
-
+useEffect(() => {
+  loadProducts()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [searchParams])
   // Merge changes into the URL; any filter change resets to page 1.
   function updateParams(changes, { resetPage = true } = {}) {
     const next = new URLSearchParams(searchParams)
@@ -216,11 +218,9 @@ function Shop({ isSearch = false }) {
         {/* Results */}
         <div>
           {failed ? (
-            <EmptyState
-              icon={PackageSearch}
-              title="Something went wrong"
+            <ErrorState
               message="We couldn't load products right now. Please check your connection and try again."
-              action={<Button onClick={() => window.location.reload()}>Try Again</Button>}
+              onRetry={loadProducts}
             />
           ) : result === null ? (
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
