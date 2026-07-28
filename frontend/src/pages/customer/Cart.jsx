@@ -9,12 +9,14 @@ import Modal from '../../components/ui/Modal'
 import EmptyState from '../../components/ui/EmptyState'
 import QuantitySelector from '../../components/ui/QuantitySelector'
 import { formatPrice } from '../../components/product/PriceDisplay'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 const API_ORIGIN = import.meta.env.VITE_API_URL.replace(/\/api$/, '')
 const DELIVERY_FEE = 100 // Rs., flat valley-wide; free above threshold
 const FREE_DELIVERY_ABOVE = 3000
 
 function Cart() {
+  usePageTitle('Shopping Cart')
   const { items, count, subtotal, updateQuantity, removeItem } = useCart()
   const { user } = useAuth()
   const { toast } = useToast()

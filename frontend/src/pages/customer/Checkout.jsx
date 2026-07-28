@@ -15,6 +15,7 @@ import { apiPlaceOrder } from '../../services/orderService'
 import Button from '../../components/ui/Button'
 import Input from '../../components/ui/Input'
 import { formatPrice } from '../../components/product/PriceDisplay'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 const API_ORIGIN = import.meta.env.VITE_API_URL.replace(/\/api$/, '')
 const FREE_DELIVERY_ABOVE = 3000
@@ -42,6 +43,7 @@ const PAYMENT_METHODS = [
 ]
 
 function Checkout() {
+  usePageTitle('Checkout')
   const { items, count, subtotal, clearCart } = useCart()
   const { user } = useAuth()
   const { toast } = useToast()

@@ -18,6 +18,7 @@ import { fetchCategories } from '../../services/productService'
 import Button from '../../components/ui/Button'
 import ProductSection from '../../components/product/ProductSection'
 import { useToast } from '../../context/ToastContext'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 // Icon per category slug — one consistent outline set (Lucide).
 const CATEGORY_ICONS = {
@@ -61,6 +62,7 @@ const TESTIMONIALS = [
 ]
 
 function Home() {
+  usePageTitle('')
   const [categories, setCategories] = useState([])
   const { toast } = useToast()
   const [newsletterEmail, setNewsletterEmail] = useState('')

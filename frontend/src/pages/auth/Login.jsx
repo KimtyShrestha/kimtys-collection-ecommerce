@@ -6,8 +6,10 @@ import { useToast } from '../../context/ToastContext'
 import Button from '../../components/ui/Button'
 import Input from '../../components/ui/Input'
 import Checkbox from '../../components/ui/Checkbox'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 function Login() {
+  usePageTitle('Log In')
   const { login } = useAuth()
   const { toast } = useToast()
   const navigate = useNavigate()

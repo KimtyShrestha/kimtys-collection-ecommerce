@@ -5,8 +5,10 @@ import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../context/ToastContext'
 import Button from '../../components/ui/Button'
 import Input from '../../components/ui/Input'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 function Register() {
+  usePageTitle('Create Account')
   const { register: registerAccount } = useAuth()
   const { toast } = useToast()
   const navigate = useNavigate()

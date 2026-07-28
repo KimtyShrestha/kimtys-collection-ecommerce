@@ -13,6 +13,7 @@ import EmptyState from '../../components/ui/EmptyState'
 import Button from '../../components/ui/Button'
 import { formatPrice } from '../../components/product/PriceDisplay'
 import { ORDER_STATUS } from '../account/OrderHistory'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 function StatCard({ icon: Icon, label, value, to, tone = 'default' }) {
   const body = (
@@ -41,6 +42,7 @@ function formatDate(value) {
 }
 
 function Dashboard() {
+  usePageTitle('Admin Dashboard')
   const [data, setData] = useState(null)
   const [failed, setFailed] = useState(false)
 
