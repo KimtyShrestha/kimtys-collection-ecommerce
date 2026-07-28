@@ -39,10 +39,16 @@ import AdminOrderDetails from './pages/admin/AdminOrderDetails'
 import AdminCustomers from './pages/admin/AdminCustomers'
 import AdminCustomerDetails from './pages/admin/AdminCustomerDetails'
 import AdminReviews from './pages/admin/AdminReviews'
+import ErrorBoundary from './components/ErrorBoundary'
+import ScrollToTop from './components/ScrollToTop'
+import NetworkStatus from './components/layout/NetworkStatus'
 
 function App() {
   return (
+    <ErrorBoundary>
     <BrowserRouter>
+      <ScrollToTop />
+      <NetworkStatus />
       <AuthProvider>
         <CartProvider>
           <ToastProvider>
@@ -108,6 +114,7 @@ function App() {
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>
+    </ErrorBoundary>
   )
 }
 
