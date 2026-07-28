@@ -19,6 +19,12 @@ import Button from '../../components/ui/Button'
 import ProductSection from '../../components/product/ProductSection'
 import { useToast } from '../../context/ToastContext'
 import { usePageTitle } from '../../hooks/usePageTitle'
+import collage1 from '../../assets/collage/floral-summer-dress-girls.jpg'
+import collage2 from '../../assets/collage/wooden-building-blocks-60.jpg'
+import collage3 from '../../assets/collage/light-up-sneakers.jpg'
+import collage4 from '../../assets/collage/newborn-cotton-bodysuit-5-pack.jpg'
+import collage5 from '../../assets/collage/ergonomic-school-backpack.jpg'
+import collage6 from '../../assets/collage/soft-plush-elephant-40cm.jpg'
 
 // Icon per category slug — one consistent outline set (Lucide).
 const CATEGORY_ICONS = {
@@ -32,6 +38,7 @@ const CATEGORY_ICONS = {
   'seasonal-items': Snowflake,
   'gift-items': Gift,
 }
+const COLLAGE = [collage1, collage2, collage3, collage4, collage5, collage6]
 
 const AGE_GROUPS = [
   { value: '0-2', label: '0–2 years', note: 'Babies & toddlers' },
@@ -86,9 +93,27 @@ function Home() {
   return (
     <div>
       {/* ============ Hero ============ */}
-      <section className="bg-primary-light">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:py-24">
-          <div>
+      <section className="relative overflow-hidden bg-primary-light">
+        {/* Collage layer */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 grid grid-cols-2 grid-rows-3 sm:grid-cols-3 sm:grid-rows-2 lg:grid-cols-6 lg:grid-rows-1"
+        >
+          {COLLAGE.map((image, index) => (
+            <img
+              key={index}
+              src={image}
+              alt=""
+              className="h-full w-full object-cover"
+            />
+          ))}
+        </div>
+
+        <div aria-hidden="true" className="absolute inset-0 bg-white/25" />
+
+        {/* Content */}
+        <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">
+          <div className="max-w-2xl rounded-2xl bg-white/80 p-8 shadow-sm backdrop-blur-sm sm:p-10">
             <p className="text-sm font-medium text-primary">
               Trusted by Kathmandu families for 18+ years
             </p>
@@ -112,7 +137,7 @@ function Home() {
           </div>
 
           {/* Trust points */}
-          <div className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+          <div className="mt-12 grid gap-4 sm:grid-cols-3">
             {[
               { icon: Truck, title: 'Valley-wide delivery', note: 'To your door in 1–3 days' },
               { icon: ShieldCheck, title: 'Cash on Delivery', note: 'Pay when your order arrives' },
@@ -120,9 +145,9 @@ function Home() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="flex items-start gap-3 rounded-lg border border-primary-border bg-white p-4"
+                className="flex items-start gap-3 rounded-lg border border-white/60 bg-white/90 p-4 shadow-sm backdrop-blur-sm"
               >
-                <item.icon className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                <item.icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
                 <div>
                   <p className="text-sm font-medium text-gray-900">{item.title}</p>
                   <p className="mt-0.5 text-xs text-gray-600">{item.note}</p>
