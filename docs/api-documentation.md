@@ -80,6 +80,13 @@ Base URL: `http://localhost:5000/api`. All responses use the envelope
 | GET | /admin/categories | Admin | With product counts, incl. inactive |
 | POST/PUT | /admin/categories(/:id) | Admin | 409 on duplicate name |
 | DELETE | /admin/categories/:id | Admin | Refused (400) while the category holds products |
+| GET | /admin/orders | Admin | Search (order number, customer name/email), status filter, pagination |
+| GET | /admin/orders/:orderNumber | Admin | Full order with customer and items |
+| PATCH | /admin/orders/:orderNumber/status | Admin | { status, paymentStatus? }. Cancelling **restores stock** in a transaction; delivered/cancelled are terminal |
+| GET | /admin/customers | Admin | Search by name/email/phone; includes order count and total spent |
+| GET | /admin/customers/:id | Admin | Profile with order history and saved addresses |
+| GET | /admin/reviews | Admin | Status filter; pending listed first |
+| PATCH | /admin/reviews/:id/status | Admin | { status: pending / approved / hidden } |
 
 
 
