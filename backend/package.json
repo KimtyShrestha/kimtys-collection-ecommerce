@@ -5,12 +5,15 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
+    "seed:images": "node scripts/attachImages.js",
+    "seed:demo": "node scripts/seedDemo.js",
     "dev": "node --watch server.js",
     "start": "node server.js",
     "migrate": "node scripts/migrate.js migrate",
     "seed": "node scripts/migrate.js seed",
     "seed:admin": "node scripts/seedAdmin.js",
     "migrate:rollback": "node scripts/migrate.js rollback"
+    
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
