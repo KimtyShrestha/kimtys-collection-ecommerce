@@ -54,3 +54,40 @@ export async function apiUpdateCategory(id, payload) {
 export async function apiDeleteCategory(id) {
   await api.delete(`/admin/categories/${id}`)
 }
+
+// --- Orders ---
+export async function apiListAdminOrders(params = {}) {
+  const response = await api.get('/admin/orders', { params })
+  return response.data.data
+}
+
+export async function apiGetAdminOrder(orderNumber) {
+  const response = await api.get(`/admin/orders/${orderNumber}`)
+  return response.data.data.order
+}
+
+export async function apiUpdateOrderStatus(orderNumber, payload) {
+  const response = await api.patch(`/admin/orders/${orderNumber}/status`, payload)
+  return response.data.data.order
+}
+
+// --- Customers ---
+export async function apiListCustomers(params = {}) {
+  const response = await api.get('/admin/customers', { params })
+  return response.data.data
+}
+
+export async function apiGetCustomer(id) {
+  const response = await api.get(`/admin/customers/${id}`)
+  return response.data.data.customer
+}
+
+// --- Reviews ---
+export async function apiListAdminReviews(params = {}) {
+  const response = await api.get('/admin/reviews', { params })
+  return response.data.data
+}
+
+export async function apiModerateReview(id, status) {
+  await api.patch(`/admin/reviews/${id}/status`, { status })
+}
