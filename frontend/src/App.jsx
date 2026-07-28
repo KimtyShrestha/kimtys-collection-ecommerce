@@ -34,6 +34,11 @@ import Dashboard from './pages/admin/Dashboard'
 import AdminProducts from './pages/admin/AdminProducts'
 import AdminProductForm from './pages/admin/AdminProductForm'
 import AdminCategories from './pages/admin/AdminCategories'
+import AdminOrders from './pages/admin/AdminOrders'
+import AdminOrderDetails from './pages/admin/AdminOrderDetails'
+import AdminCustomers from './pages/admin/AdminCustomers'
+import AdminCustomerDetails from './pages/admin/AdminCustomerDetails'
+import AdminReviews from './pages/admin/AdminReviews'
 
 function App() {
   return (
@@ -91,6 +96,11 @@ function App() {
                 <Route path="products/new" element={<AdminProductForm />} />
                 <Route path="products/:id/edit" element={<AdminProductForm />} />
                 <Route path="categories" element={<AdminCategories />} />
+                <Route path="orders" element={<AdminOrders />} />
+                <Route path="orders/:orderNumber" element={<AdminOrderDetails />} />
+                <Route path="customers" element={<AdminCustomers />} />
+                <Route path="customers/:id" element={<AdminCustomerDetails />} />
+                <Route path="reviews" element={<AdminReviews />} />
 
             </Route>
             </Routes>
