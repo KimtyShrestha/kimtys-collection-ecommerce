@@ -8,6 +8,8 @@ import ProductFilters from '../../components/product/ProductFilters'
 import Pagination from '../../components/ui/Pagination'
 import Button from '../../components/ui/Button'
 import EmptyState from '../../components/ui/EmptyState'
+import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
+import { usePageTitle } from '../../hooks/usePageTitle'
 
 const SORT_CHOICES = [
   { value: 'newest', label: 'Newest' },
@@ -27,11 +29,13 @@ const FLAG_TITLES = {
 // isSearch=true when rendered at /search — same machinery,
 // search-focused heading and empty state.
 function Shop({ isSearch = false }) {
+  usePageTitle(isSearch ? 'Search' : 'Shop')
   const [searchParams, setSearchParams] = useSearchParams()
   const [categories, setCategories] = useState([])
   const [result, setResult] = useState(null) // null = loading
   const [failed, setFailed] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
+  useBodyScrollLock(drawerOpen)
 
   const queryText = searchParams.get('q') || ''
   const filterFlag = searchParams.get('filter') // featured | new | popular | sale

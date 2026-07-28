@@ -13,6 +13,7 @@ import {
   LogOut,
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock'
 
 const ADMIN_LINKS = [
   { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
@@ -52,6 +53,7 @@ function SidebarLinks({ onNavigate }) {
 function AdminLayout() {
   const { user, logout } = useAuth()
   const [drawerOpen, setDrawerOpen] = useState(false)
+  useBodyScrollLock(drawerOpen)
 
   return (
     <div className="min-h-screen bg-gray-50">
